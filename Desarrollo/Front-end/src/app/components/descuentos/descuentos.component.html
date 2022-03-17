@@ -1,0 +1,171 @@
+<div class="container">
+  <h1>Bienvenido</h1>
+  <h1>Lista de Descuentos</h1>
+
+  <br>
+  <div class="text-center">
+    <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#crear-descuento">Crear
+      Descuento</button>
+  </div>
+  <br>
+
+  <div class="modal fade" id="crear-descuento" tabindex="-1" aria-labelledby="CrearDescuentoModal" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="CrearDescuentoModal">Crear Descuento</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <form #registro="ngForm" (ngSubmit)="onSubmit(registro)">
+
+            <div class="mb-3">
+              <label for="recipient-nombre" class="col-form-label">Nombre:</label>
+              <input type="text" class="form-control" id="recipient-nombre" placeholder="Nombre del descuento"
+                #nombre="ngModel" [(ngModel)]="descuento.nombre" required name="nombre">
+            </div>
+
+            <div class="mb-3">
+              <label for="recipient-modalidad_id" class="col-form-label">Modalidad:</label>
+              <select class="form-select" id="recipient-modalidad_id" #modalidad_id="ngModel"
+                [(ngModel)]="descuento.modalidad_id" required name="modalidad_id">
+                <option *ngFor="let modalidades of modalidadLista" value="{{modalidades.nombre}}">{{modalidades.nombre}}
+                </option>
+              </select>
+            </div>
+
+            <div class="mb-3">
+              <label for="recipient-pais" class="col-form-label">Pais:</label>
+              <input type="text" class="form-control" id="recipient-pais" placeholder="pais del descuento"
+                #pais="ngModel" [(ngModel)]="descuento.pais" required name="pais">
+            </div>
+
+            <div class="mb-3">
+              <label for="recipient-descuentos" class="col-form-label">Descuentos:</label>
+              <input type="text" class="form-control" id="recipient-descuentos" placeholder="descuentos del descuento"
+                #descuentos="ngModel" [(ngModel)]="descuento.descuento" required name="descuento">
+            </div>
+
+            <div class="mb-3">
+              <label class="col-form-label">Curso:</label>
+              <select class="form-select" id="recipient-curso" #curso_id="ngModel" [(ngModel)]="descuento.curso_id"
+                name="curso">
+                <option *ngFor="let curso of cursoLista" value="{{curso.nombre}}">{{curso.nombre}}
+                </option>
+              </select>
+            </div>
+
+            <div class="mb-3">
+              <label for="recipient-fecha" class="col-form-label">Fecha final:</label>
+              <input type="date" class="form-control" id="recipient-fecha_final" placeholder="fecha final del descuento"
+                #fecha_final="ngModel" [(ngModel)]="descuento.fecha_final" required name="fechaFinal">
+            </div>
+
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+              <button type="submit" class="btn btn-primary">Guardar</button>
+            </div>
+
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <table class="table table-striped">
+    <thead class="sticky-top">
+      <tr>
+        <th scope="col">#</th>
+        <th scope="col">Nombre</th>
+        <th scope="col">Modalidad</th>
+        <th scope="col">Pais</th>
+        <th scope="col">Descuento</th>
+        <th scope="col">Curso</th>
+        <th scope="col" colspan="2">Fecha final</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let descuento of descuentoLista">
+        <th scope="row">{{descuento.id}}</th>
+        <td>{{descuento.nombre}}</td>
+        <td>{{descuento.modalidad_id}}</td>
+        <td>{{descuento.pais}}</td>
+        <td>{{descuento.descuento}}</td>
+        <td>{{descuento.curso_id}}</td>
+        <td>{{descuento.fecha_final}}</td>
+        <td>
+          <div class="btn-group" role="group" aria-label="Basic outlined example">
+            <button type="button" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#editar-descuento"
+              (click)="pasoDeDatos(descuento.id);">Editar</button>
+
+              <div class="modal fade" id="editar-descuento" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h5 class="modal-title" id="EditarDescuentoModal">Editar Descuento</h5>
+                      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                      <form #editar="ngForm" (ngSubmit)="editarDescuento(editar)">
+
+                        <div class="mb-3">
+                          <label for="recipient-nombree" class="col-form-label">Nombre:</label>
+                          <input type="text" class="form-control" id="recipient-nombree" placeholder="Nombre del descuento"
+                            #nombre="ngModel" [(ngModel)]="descuento.nombre" required name="nombre">
+                        </div>
+
+                        <div class="mb-3">
+                          <label for="recipient-modalidad_ide" class="col-form-label">Modalidad:</label>
+                          <select class="form-select" id="recipient-modalidad_ide" #modalidad_id="ngModel"
+                            [(ngModel)]="descuento.modalidad_id" required name="modalidad_id">
+                            <option *ngFor="let modalidades of modalidadLista" value="{{modalidades.nombre}}">{{modalidades.nombre}}
+                            </option>
+                          </select>
+                        </div>
+
+                        <div class="mb-3">
+                          <label for="recipient-paise" class="col-form-label">Pais:</label>
+                          <input type="text" class="form-control" id="recipient-paise" placeholder="pais del descuento"
+                            #pais="ngModel" [(ngModel)]="descuento.pais" required name="pais">
+                        </div>
+
+                        <div class="mb-3">
+                          <label for="recipient-descuentose" class="col-form-label">Descuentos:</label>
+                          <input type="text" class="form-control" id="recipient-descuentose" placeholder="descuentos del descuento"
+                            #descuento="ngModel" [(ngModel)]="descuento.descuento" required name="descuento">
+                        </div>
+
+                        <div class="mb-3">
+                          <label class="col-form-label">Curso:</label>
+                          <select class="form-select" id="recipient-cursoe" #curso="ngModel" [(ngModel)]="descuento.curso_id"
+                            name="curso">
+                            <option *ngFor="let curso of cursoLista" value="{{curso.nombre}}">{{curso.nombre}}
+                            </option>
+                          </select>
+                        </div>
+
+                        <div class="mb-3">
+                          <label for="recipient-fecha" class="col-form-label">Fecha final:</label>
+                          <input type="date" class="form-control" id="recipient-fecha_finale" placeholder="fecha final del descuento"
+                            #fecha_final="ngModel" [(ngModel)]="descuento.fecha_final" required name="fecha_final">
+                        </div>
+
+                        <div class="modal-footer">
+                          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                          <button type="submit" class="btn btn-primary" data-bs-dismiss="modal">Guardar</button>
+                        </div>
+
+                      </form>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+            <button type="button" class="btn btn-danger" (click)="borrarDescuentos(descuento.id)">Eliminar</button>
+          </div>
+        </td>
+      </tr>
+    </tbody>
+
+  </table>
+</div>

@@ -1,0 +1,163 @@
+<div class="container">
+  <h1>Bienvenido</h1>
+  <h1>Lista de Cursos</h1>
+
+  <br>
+  <div class="text-center">
+    <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#crear-curso">Crear
+      Curso</button>
+  </div>
+  <br>
+
+  <div class="modal fade" id="crear-curso" tabindex="-1" aria-labelledby="CrearCursoModal" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="CrearCursoModal">Crear Curso</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+
+        <div class="modal-body">
+
+          <form #registro="ngForm" (ngSubmit)="onSubmit(registro)">
+
+            <div class="mb-3">
+              <label for="recipient-nombre" class="col-form-label">Nombre:</label>
+              <input type="text" class="form-control" id="recipient-nombre" placeholder="Nombre del curso"
+                #nombre="ngModel" [(ngModel)]="cursos.nombre" required name="nombre">
+            </div>
+
+            <div class="mb-3">
+              <label for="recipient-costo" class="col-form-label">Costo:</label>
+              <input type="text" class="form-control" id="recipient-costo" placeholder="Costo del curso"
+                #costo="ngModel" [(ngModel)]="cursos.costo" required name="costo">
+            </div>
+
+            <div class="mb-3">
+              <label for="message-description" class="col-form-label">Descripción:</label>
+              <textarea class="form-control" id="message-description" placeholder="descripcion del curso"
+                #descripcion="ngModel" [(ngModel)]="cursos.description" name="descripcion"></textarea>
+            </div>
+
+            <div class="mb-3">
+              <label for="recipient-horas" class="col-form-label">Horas:</label>
+              <input type="text" class="form-control" id="recipient-horas" placeholder="Horas del curso"
+                #horas="ngModel" [(ngModel)]="cursos.horas" required name="horas">
+            </div>
+
+            <div class="mb-3">
+              <label for="recipient-dirigido_a" class="col-form-label">Dirigido A:</label>
+              <input type="text" class="form-control" id="recipient-dirigido_a" #dirigido_a="ngModel"
+                [(ngModel)]="cursos.dirigido_a" name="dirigido_a">
+            </div>
+
+            <div class="mb-3">
+              <label for="recipient-modalidad" class="col-form-label">Modalidad:</label>
+              <select class="form-select" id="recipient-modalidad" #modalidad_id="ngModel"
+                [(ngModel)]="cursos.modalidad_id" name="modalidad_id">
+                <option *ngFor="let modalidad of ModalidadLista" value="{{modalidad.nombre}}">{{modalidad.nombre}}
+                </option>
+              </select>
+            </div>
+
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+              <button type="submit" class="btn btn-primary">Guardar</button>
+            </div>
+
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <input type="text" id="filtro" placeholder="Buscar por modalidad" title="Buscar por modalidad" (keyup)="filtroJS()">
+
+  <table class="table table-striped" id="tablaCursos">
+    <thead class="sticky-top">
+      <tr>
+        <th scope="col">#</th>
+        <th scope="col">Nombre</th>
+        <th scope="col">Costo</th>
+        <th scope="col">Descripción</th>
+        <th scope="col">Horas</th>
+        <th scope="col">Dirigido A</th>
+        <th scope="col" colspan="2">Modalidad</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let curso of cursoLista">
+        <th scope="row">{{curso.id}}</th>
+        <td>{{curso.nombre}}</td>
+        <td>{{curso.costo}}</td>
+        <td>{{curso.description}}</td>
+        <td>{{curso.horas}}</td>
+        <td>{{curso.dirigido_a}}</td>
+        <td>{{curso.modalidad_id}}</td>
+        <td>
+          <div class="btn-group" role="group" aria-label="Basic outlined example">
+            <button type="button" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#editar-curso"
+              (click)="pasoDeDatos(curso.id);">Editar</button>
+
+            <div class="modal fade" id="editar-curso" tabindex="-1" aria-labelledby="exampleModalLabel"
+              aria-hidden="true">
+              <div class="modal-dialog">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Editar Curso</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                  </div>
+                  <div class="modal-body">
+                    <form #editar="ngForm" (ngSubmit)="editarCurso(editar)">
+                      <div class="mb-3">
+                        <label for="recipient-nombree" class="col-form-label">Nombre:</label>
+                        <input type="text" class="form-control" id="recipient-nombree" placeholder="Nombre del curso"
+                          #nombree="ngModel" [(ngModel)]="cursos.nombre" required name="nombree">
+                      </div>
+                      <div class="mb-3">
+                        <label for="recipient-costoe" class="col-form-label">Costo:</label>
+                        <input type="text" class="form-control" id="recipient-costoe" placeholder="Costo del curso"
+                          #costoe="ngModel" [(ngModel)]="cursos.costo" required name="costoe">
+                      </div>
+                      <div class="mb-3">
+                        <label for="message-descriptione" class="col-form-label">Descripción:</label>
+                        <textarea class="form-control" id="message-descriptione" placeholder="descripcion del curso"
+                          #descripcione="ngModel" [(ngModel)]="cursos.description" name="descripcione"></textarea>
+                      </div>
+                      <div class="mb-3">
+                        <label for="recipient-horase" class="col-form-label">Horas:</label>
+                        <input type="text" class="form-control" id="recipient-horase" placeholder="Horas del curso"
+                          #horase="ngModel" [(ngModel)]="cursos.horas" required name="horase">
+                      </div>
+                      <div class="mb-3">
+                        <label for="recipient-dirigido_ae" class="col-form-label">Dirigido A:</label>
+                        <input type="text" class="form-control" id="recipient-dirigido_ae" #dirigido_ae="ngModel"
+                          [(ngModel)]="cursos.dirigido_a" name="dirigido_ae">
+                      </div>
+                      <div class="mb-3">
+                        <label for="recipient-modalidad" class="col-form-label">Modalidad:</label>
+                        <select class="form-select" id="recipient-modalidade" #modalidad_ide="ngModel"
+                          [(ngModel)]="cursos.modalidad_id" required name="modalidad_ide">
+                          <option *ngFor="let modalidad of ModalidadLista" value="{{modalidad.nombre}}">
+                            {{modalidad.nombre}}</option>
+                        </select>
+                      </div>
+                      <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                        <button type="submit" class="btn btn-primary" data-bs-dismiss="modal">Guardar</button>
+                      </div>
+                    </form>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <button type="button" class="btn btn-danger" (click)="borrarCurso(curso.id)">Eliminar</button>
+
+          </div>
+        </td>
+      </tr>
+    </tbody>
+
+  </table>
+</div>

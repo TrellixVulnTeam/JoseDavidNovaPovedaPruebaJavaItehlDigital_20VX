@@ -1,0 +1,18 @@
+h1{
+  text-align: center;
+}
+
+th{
+  text-align: center;
+  background-color: white;
+}
+
+th[colspan="2"]{
+  text-align: left;
+  background-color: white;
+}
+
+td{
+  text-align: justify;
+  text-align: center;
+}

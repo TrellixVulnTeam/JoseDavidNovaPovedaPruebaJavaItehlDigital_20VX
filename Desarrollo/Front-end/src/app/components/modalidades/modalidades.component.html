@@ -1,0 +1,26 @@
+<div class="container">
+  <h1>Bienvenido</h1>
+  <h1>Lista de Modalidades</h1>
+
+  <br>
+
+  <br>
+
+  <table class="table table-striped">
+    <thead class="sticky-top">
+      <tr>
+        <th scope="col">#</th>
+        <th scope="col">Nombre</th>
+        <th scope="col">Descripción</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let modalidad of modalidadesList">
+        <th scope="row">{{modalidad.id}}</th>
+        <td>{{modalidad.nombre}}</td>
+        <td>{{modalidad.descripcion}}</td>
+      </tr>
+    </tbody>
+
+  </table>
+</div>
