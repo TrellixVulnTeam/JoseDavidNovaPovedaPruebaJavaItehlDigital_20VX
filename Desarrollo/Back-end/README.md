@@ -15,7 +15,8 @@ ingresar en consola:
 $ java -jar api.jar
 ```
 ### para usar backend sin compilar
-Ingresar en consola:
+1. Entrar a la carpeta SpringRestFull
+2. Ingresar en consola:
 ```
 $ mvn spring-boot:run
 ```
