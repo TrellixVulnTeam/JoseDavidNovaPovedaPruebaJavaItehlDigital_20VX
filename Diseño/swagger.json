@@ -1,0 +1,516 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "description": "A continuación se describen las solicitudes coriendo el API en servidor local con el comando mvn spring-boot:run, la carpeta back-end tiene el archivo database.sql es el modelo el cual usa la API.",
+    "version": "0.0.1",
+    "title": "API de cursos con Spring-Boot",
+    "contact": {
+      "email": "akiles.n.1@gmail.com"
+    }
+  },
+  "host": "localhost:8080",
+  "basePath": "/api",
+  "tags": [
+    {
+      "name": "Cursos",
+      "description": "CRUD Basico Cursos"
+    },
+    {
+      "name": "Descuentos",
+      "description": "Solicitudes con Descuentos"
+    },
+    {
+      "name": "Modalidades",
+      "description": "Solicitudes con modalidades"
+    }
+  ],
+  "schemes": [
+    "http"
+  ],
+  "paths": {
+    "/cursos": {
+      "get": {
+        "tags": [
+          "Cursos"
+        ],
+        "summary": "listar cursos",
+        "description": "listar Cursos almacenados",
+        "operationId": "listarCursos",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "Operacion exitosa",
+            "schema": {
+              "$ref": "#/definitions/Cursos"
+            }
+          },
+          "404": {
+            "description": "No se encuentran almacenados datos"
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Cursos"
+        ],
+        "summary": "Guardar curso",
+        "description": "Se guarda el curso en la base de datos",
+        "operationId": "guardarCursos",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "description": "Datos que necesita el curso para almacenarse",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/Cursos"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Guardado con exito",
+            "schema": {
+              "$ref": "#/definitions/Cursos"
+            }
+          },
+          "404": {
+            "description": "No se encuentran almacenados datos"
+          }
+        }
+      }
+    },
+    "/cursos/filter/{id}": {
+      "get": {
+        "tags": [
+          "Cursos"
+        ],
+        "summary": "filtrar curso por id",
+        "description": "busca un curso por medio de su id enviado a traves de la url",
+        "operationId": "buscarCursos",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Operacion exitosa",
+            "schema": {
+              "$ref": "#/definitions/Cursos"
+            }
+          },
+          "404": {
+            "description": "No se encuentran almacenados datos"
+          }
+        }
+      }
+    },
+    "/cursos/{id}": {
+      "delete": {
+        "tags": [
+          "Cursos"
+        ],
+        "summary": "Eliminar un curso",
+        "description": "",
+        "operationId": "eliminarCurso",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Operacion exitosa"
+          },
+          "204": {
+            "description": "Contenido eliminado"
+          },
+          "500": {
+            "description": "El contenido ya fue eliminado o hay un error con el servidor"
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Cursos"
+        ],
+        "summary": "Actualizar un curso",
+        "description": "",
+        "operationId": "atualizarCurso",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "in": "body",
+            "name": "body",
+            "description": "Datos a actualizar",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/Cursos"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Operacion exitosa"
+          },
+          "404": {
+            "description": "Error el contenido no existe"
+          },
+          "500": {
+            "description": "hay un error con el servidor"
+          }
+        }
+      }
+    },
+    "/descuentos": {
+      "get": {
+        "tags": [
+          "Descuentos"
+        ],
+        "summary": "Listar descuentos",
+        "description": "",
+        "operationId": "listarDescuentos",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "Solicitud exitosa",
+            "schema": {
+              "$ref": "#/definitions/Descuentos"
+            }
+          },
+          "404": {
+            "description": "Base no encontrada"
+          },
+          "502": {
+            "description": "No hay conexion al servidor"
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Descuentos"
+        ],
+        "summary": "Guardar descuento",
+        "description": "",
+        "operationId": "guardarDescuentos",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "description": "Datos que necesita el descuento para almacenarse",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/Descuentos"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Guardado con exito",
+            "schema": {
+              "$ref": "#/definitions/Descuentos"
+            }
+          }
+        }
+      }
+    },
+    "/descuentos/filter/{id}": {
+      "get": {
+        "tags": [
+          "Descuentos"
+        ],
+        "summary": "filtrar descuento por id",
+        "description": "busca un descuento por medio de su id enviado a traves de la url",
+        "operationId": "buscarDescuentos",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Operacion exitosa",
+            "schema": {
+              "$ref": "#/definitions/Descuentos"
+            }
+          },
+          "404": {
+            "description": "No se encuentran almacenados datos"
+          }
+        }
+      }
+    },
+    "/descuentos/{id}": {
+      "put": {
+        "tags": [
+          "Descuentos"
+        ],
+        "summary": "Actualizar un descuento",
+        "description": "",
+        "operationId": "atualizarDescuento",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "in": "body",
+            "name": "body",
+            "description": "Datos a actualizar",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/Descuentos"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Operacion exitosa"
+          },
+          "404": {
+            "description": "Error el contenido no existe"
+          },
+          "500": {
+            "description": "hay un error con el servidor"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Descuentos"
+        ],
+        "summary": "Eliminar un descuento",
+        "description": "",
+        "operationId": "eliminarDescuento",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Operacion exitosa"
+          },
+          "204": {
+            "description": "Contenido eliminado"
+          },
+          "500": {
+            "description": "El contenido ya fue eliminado o hay un error con el servidor"
+          }
+        }
+      }
+    },
+    "/modalidades": {
+      "get": {
+        "tags": [
+          "Modalidades"
+        ],
+        "summary": "listar modalidades",
+        "description": "Obtiene una respuesta JSON con las modalidades actuales, estas no se editan estan presentes en la base de datos desde su creación.",
+        "operationId": "listarModalidades",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "Operacion exitosa",
+            "schema": {
+              "$ref": "#/definitions/Modalidades"
+            }
+          },
+          "404": {
+            "description": "No se encuentran almacenados datos"
+          }
+        }
+      }
+    },
+    "/modalidades/filter/{id}": {
+      "get": {
+        "tags": [
+          "Modalidades"
+        ],
+        "summary": "obtener una modalidad por id",
+        "description": "Obtiene una respuesta JSON con una modalidad",
+        "operationId": "listarModalidadesPorId",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Operacion exitosa",
+            "schema": {
+              "$ref": "#/definitions/Modalidades"
+            }
+          },
+          "404": {
+            "description": "No se encuentran almacenados datos"
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "Cursos": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "integer"
+        },
+        "nombre": {
+          "type": "string"
+        },
+        "costo": {
+          "type": "number"
+        },
+        "description": {
+          "type": "string"
+        },
+        "horas": {
+          "type": "integer"
+        },
+        "dirigido_a": {
+          "type": "string"
+        },
+        "modalidad_id": {
+          "type": "string"
+        }
+      }
+    },
+    "Modalidades": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "integer"
+        },
+        "nombre": {
+          "type": "string"
+        },
+        "descripcion": {
+          "type": "string"
+        }
+      }
+    },
+    "Descuentos": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "integer"
+        },
+        "nombre": {
+          "type": "string"
+        },
+        "modalidad_id": {
+          "type": "string"
+        },
+        "pais": {
+          "type": "string"
+        },
+        "descuento": {
+          "type": "string"
+        },
+        "curso_id": {
+          "type": "string"
+        },
+        "fecha_final": {
+          "type": "string"
+        }
+      }
+    }
+  },
+  "externalDocs": {
+    "description": "Portafolio WEB",
+    "url": "http://norticserviciotecnico.000webhostapp.com/"
+  }
+}
